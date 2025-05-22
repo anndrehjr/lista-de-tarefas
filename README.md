@@ -36,7 +36,7 @@ Um aplicativo de gerenciamento de tarefas completo construído com Next.js e Rea
 
 1. Clone o repositório:
    \`\`\`bash
-   git clone https://github.com/seu-usuario/gerenciador-tarefas.git
+   git clone https://github.com/anndrehjr/lista-de-tarefass.git
    cd gerenciador-tarefas
    \`\`\`
 
@@ -112,7 +112,6 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 
 ## 📞 Contato
 
-Seu Nome - [@seu_twitter](https://twitter.com/seu_twitter) - seu.email@exemplo.com
 
 Link do Projeto: [https://github.com/seu-usuario/gerenciador-tarefas](https://github.com/seu-usuario/gerenciador-tarefas)
 \`\`\`
