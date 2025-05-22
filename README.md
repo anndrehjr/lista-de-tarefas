@@ -36,7 +36,7 @@ Um aplicativo de gerenciamento de tarefas completo construído com Next.js e Rea
 
 1. Clone o repositório:
    \`\`\`bash
-   git clone https://github.com/anndrehjr/lista-de-tarefass.git
+   git clone https://github.com/anndrehjr/lista-de-tarefas.git
    cd gerenciador-tarefas
    \`\`\`
 
