@@ -3,7 +3,7 @@
 import type React from "react"
 import { useState } from "react"
 import type { Task } from "../app/page"
-import { Trash2 } from "lucide-react"
+import { Trash2, Clock, List } from "lucide-react"
 
 interface TaskItemProps {
   task: Task
@@ -12,6 +12,7 @@ interface TaskItemProps {
   onToggleSubTask: (taskId: number, subTaskId: number) => void
   onAddSubTask: (taskId: number, title: string) => void
   onDeleteSubTask: (taskId: number, subTaskId: number) => void
+  onOpenSubtaskModal: (task: Task) => void
   index: number
 }
 
@@ -22,42 +23,37 @@ export default function TaskItem({
   onToggleSubTask,
   onAddSubTask,
   onDeleteSubTask,
+  onOpenSubtaskModal,
   index,
 }: TaskItemProps) {
   const [newSubTask, setNewSubTask] = useState("")
   const [showSubTasks, setShowSubTasks] = useState(false)
 
-  // Verificar se a tarefa está vencida
+  // Modificar as funções isVencida e isHoje para corrigir o problema de comparação de datas
   const isVencida = () => {
     if (!task.dataVencimento || task.feita) return false
-    const hoje = new Date()
-    hoje.setHours(0, 0, 0, 0)
-    const dataVencimento = new Date(task.dataVencimento)
-    // Ajuste para considerar o fuso horário
-    dataVencimento.setHours(12, 0, 0, 0)
-    return dataVencimento < hoje
+
+    const hojeFormatado = new Date().toISOString().split("T")[0]
+
+    // Comparar diretamente as strings de data
+    return task.dataVencimento < hojeFormatado
   }
 
   // Verificar se a tarefa vence hoje
   const isHoje = () => {
     if (!task.dataVencimento || task.feita) return false
-    const hoje = new Date()
-    hoje.setHours(0, 0, 0, 0)
-    const dataVencimento = new Date(task.dataVencimento)
-    // Ajuste para considerar o fuso horário
-    dataVencimento.setHours(12, 0, 0, 0)
-    const dataVencimentoSemHora = new Date(dataVencimento.setHours(0, 0, 0, 0))
-    return dataVencimentoSemHora.getTime() === hoje.getTime()
+
+    const hojeFormatado = new Date().toISOString().split("T")[0]
+
+    // Comparar diretamente as strings de data
+    return task.dataVencimento === hojeFormatado
   }
 
   // Formatar a data para exibição
   const formatarData = (dataString: string) => {
-    const data = new Date(dataString)
-    return data.toLocaleDateString("pt-BR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    })
+    // Usar o formato YYYY-MM-DD diretamente para evitar problemas de fuso horário
+    const [ano, mes, dia] = dataString.split("-").map(Number)
+    return `${dia.toString().padStart(2, "0")}/${mes.toString().padStart(2, "0")}/${ano}`
   }
 
   // Determinar a classe CSS com base no status da tarefa
@@ -104,9 +100,18 @@ export default function TaskItem({
           <label htmlFor={`task-${task.id}`} className={`task-label ${task.feita ? "task-completed" : ""}`}>
             {task.titulo}
           </label>
-          <span className="task-category" title={`Categoria: ${task.categoria}`}>
-            {categoriasIcons[task.categoria]}
-          </span>
+          <div className="task-actions">
+            <span className="task-category" title={`Categoria: ${task.categoria}`}>
+              {categoriasIcons[task.categoria]}
+            </span>
+            <button
+              onClick={() => onOpenSubtaskModal(task)}
+              className="subtask-modal-button"
+              title="Gerenciar subtarefas"
+            >
+              <List size={16} />
+            </button>
+          </div>
         </div>
 
         {task.dataVencimento && (
@@ -129,6 +134,19 @@ export default function TaskItem({
               <line x1="3" y1="10" x2="21" y2="10"></line>
             </svg>
             <span>{formatarData(task.dataVencimento)}</span>
+          </div>
+        )}
+
+        {(task.horaInicio || task.horaFim) && (
+          <div className="task-due-date mt-1">
+            <Clock className="due-date-icon" size={14} />
+            <span>
+              {task.horaInicio && task.horaFim
+                ? `${task.horaInicio} - ${task.horaFim}`
+                : task.horaInicio
+                  ? `A partir de ${task.horaInicio}`
+                  : `Até ${task.horaFim}`}
+            </span>
           </div>
         )}
 

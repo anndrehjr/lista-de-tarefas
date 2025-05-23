@@ -6,22 +6,34 @@ import { useState } from "react"
 import type { TaskCategory } from "../app/page"
 
 interface TaskFormProps {
-  onAddTask: (titulo: string, dataVencimento?: string, categoria?: TaskCategory) => void
+  onAddTask: (
+    titulo: string,
+    dataVencimento?: string,
+    horaInicio?: string,
+    horaFim?: string,
+    categoria?: TaskCategory,
+  ) => void
 }
 
 export default function TaskForm({ onAddTask }: TaskFormProps) {
   const [titulo, setTitulo] = useState("")
   const [showDateInput, setShowDateInput] = useState(false)
+  const [showTimeInput, setShowTimeInput] = useState(false)
   const [dataVencimento, setDataVencimento] = useState("")
+  const [horaInicio, setHoraInicio] = useState("")
+  const [horaFim, setHoraFim] = useState("")
   const [categoria, setCategoria] = useState<TaskCategory>("outro")
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (titulo.trim()) {
-      onAddTask(titulo.trim(), dataVencimento || undefined, categoria)
+      onAddTask(titulo.trim(), dataVencimento || undefined, horaInicio || undefined, horaFim || undefined, categoria)
       setTitulo("")
       setDataVencimento("")
+      setHoraInicio("")
+      setHoraFim("")
       setShowDateInput(false)
+      setShowTimeInput(false)
     }
   }
 
@@ -73,7 +85,10 @@ export default function TaskForm({ onAddTask }: TaskFormProps) {
                 type="date"
                 id="data-vencimento"
                 value={dataVencimento}
-                onChange={(e) => setDataVencimento(e.target.value)}
+                onChange={(e) => {
+                  // Garantir que estamos usando a data exata selecionada pelo usuário
+                  setDataVencimento(e.target.value)
+                }}
                 className="date-input"
                 min={new Date().toISOString().split("T")[0]}
               />
@@ -84,6 +99,48 @@ export default function TaskForm({ onAddTask }: TaskFormProps) {
                   setDataVencimento("")
                 }}
                 className="date-toggle-button"
+              >
+                Remover
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className="date-toggle-container">
+          {!showTimeInput ? (
+            <button type="button" onClick={() => setShowTimeInput(true)} className="date-toggle-button">
+              + Adicionar horário
+            </button>
+          ) : (
+            <div className="date-input-container">
+              <label htmlFor="hora-inicio" className="date-label">
+                De:
+              </label>
+              <input
+                type="time"
+                id="hora-inicio"
+                value={horaInicio}
+                onChange={(e) => setHoraInicio(e.target.value)}
+                className="date-input"
+              />
+              <label htmlFor="hora-fim" className="date-label ml-2">
+                Até:
+              </label>
+              <input
+                type="time"
+                id="hora-fim"
+                value={horaFim}
+                onChange={(e) => setHoraFim(e.target.value)}
+                className="date-input"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  setShowTimeInput(false)
+                  setHoraInicio("")
+                  setHoraFim("")
+                }}
+                className="date-toggle-button ml-2"
               >
                 Remover
               </button>
