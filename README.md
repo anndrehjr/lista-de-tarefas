@@ -36,7 +36,7 @@ Um aplicativo de gerenciamento de tarefas completo construído com Next.js e Rea
 
 1. Clone o repositório:
    \`\`\`bash
-   git clone https://github.com/seu-usuario/gerenciador-tarefas.git
+   git clone https://github.com/anndrehjr/lista-de-tarefas.git
    cd gerenciador-tarefas
    \`\`\`
 
@@ -62,15 +62,6 @@ Um aplicativo de gerenciamento de tarefas completo construído com Next.js e Rea
 
 Para implementar a autenticação real com Google em produção:
 
-1. Crie um projeto no [Google Cloud Console](https://console.cloud.google.com/)
-2. Configure as credenciais OAuth 2.0
-3. Instale o NextAuth.js:
-   \`\`\`bash
-   npm install next-auth
-   # ou
-   yarn add next-auth
-   \`\`\`
-4. Configure o NextAuth.js seguindo a [documentação oficial](https://next-auth.js.org/providers/google)
 
 ## 📱 Uso
 
@@ -112,7 +103,6 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 
 ## 📞 Contato
 
-Seu Nome - [@seu_twitter](https://twitter.com/seu_twitter) - seu.email@exemplo.com
 
 Link do Projeto: [https://github.com/seu-usuario/gerenciador-tarefas](https://github.com/seu-usuario/gerenciador-tarefas)
 \`\`\`
