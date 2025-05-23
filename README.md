@@ -62,15 +62,6 @@ Um aplicativo de gerenciamento de tarefas completo construído com Next.js e Rea
 
 Para implementar a autenticação real com Google em produção:
 
-1. Crie um projeto no [Google Cloud Console](https://console.cloud.google.com/)
-2. Configure as credenciais OAuth 2.0
-3. Instale o NextAuth.js:
-   \`\`\`bash
-   npm install next-auth
-   # ou
-   yarn add next-auth
-   \`\`\`
-4. Configure o NextAuth.js seguindo a [documentação oficial](https://next-auth.js.org/providers/google)
 
 ## 📱 Uso
 
